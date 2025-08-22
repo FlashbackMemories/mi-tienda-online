@@ -227,7 +227,7 @@
 
   <!-- HEADER -->
   <header>
-    <img src="https://via.placeholder.com/150x50?text=LOGO" alt="Logo Flashback Memories">
+    <img src="imagen1.jpg" alt="Logo Flashback Memories">
     <h1>Flashback Memories</h1>
     <p>Plantilla con carrito, checkout y agenda personalizable</p>
     <div class="social-links">
@@ -260,21 +260,30 @@
     <h2>Productos</h2>
     <div class="products">
       <div class="product">
-        <h3>Producto 1</h3>
-        <p>$1000</p>
-        <button onclick="addToCart('Producto 1', 1000)">Agregar al carrito</button>
-      </div>
-      <div class="product">
         <h3>Photorroll</h3>
-        <p>$1500</p>
-        <button onclick="addToCart('Photorroll', 1500)">Agregar al carrito</button>
+        <p>$8.000</p>
+        <button onclick="addToCart('Producto 1', 8000)">Agregar al carrito</button>
       </div>
       <div class="product">
-        <h3>Producto 3</h3>
-        <p>$2000</p>
-        <button onclick="addToCart('Producto 3', 2000)">Agregar al carrito</button>
+        <h3>Mini book</h3>
+        <p>$8.000</p>
+        <button onclick="addToCart('Photorroll', 8000)">Agregar al carrito</button>
       </div>
+      <div class="product">
+        <h3>Mini Polaroids x 10 unidades</h3>
+        <p>$4.500</p>
+        <button onclick="addToCart('Producto 3', 4500)">Agregar al carrito</button>
+      </div>
+    </div class="product">
+    <h3>Polaroids x 10 unidades</h3>
+    <p>$5.000</p>
+    <button onclick="addToCart('Producto 4', 5000)">Agregar al carrito</button>
+    </div class="product">
+    <h3>LLavero de acrilico</h3>
+    <p>$3.000</p>
+    <button onclick="addToCart('Producto 5', 3000)">Agregar al carrito</button>
     </div>
+    
 
     <div id="cart">
       <h2>Carrito</h2>
@@ -420,11 +429,11 @@
     // --- Agenda Personalizada ---
     function createAgenda(event) {
       event.preventDefault();
-      let price = 2500;
-      if (document.getElementById('esquineros').checked)       price += 200;
-      if (document.getElementById('hojasEstudiante').checked)  price += 300;
-      if (document.getElementById('hojasDocente').checked)     price += 300;
-      if (document.getElementById('trackMenstrual').checked)   price += 250;
+      let price = 20.000;
+      if (document.getElementById('esquineros').checked)       price += 1000;
+      if (document.getElementById('hojasEstudiante').checked)  price += 700;
+      if (document.getElementById('hojasDocente').checked)     price += 700;
+      if (document.getElementById('trackMenstrual').checked)   price += 300;
 
       addToCart("Agenda Personalizada", price);
       alert(`Agenda personalizada agregada al carrito por $${price}`);
