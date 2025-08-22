@@ -1,58 +1,261 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Mi Tienda Online</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flashback Memories</title>
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+
   <style>
-    body { margin: 0; font-family: Arial, sans-serif; background: #f5f5f5; color: #333; }
-    header { background: #000000; color: white; padding: 1rem; text-align: center; }
-    header img { max-width: 150px; margin-bottom: 0.5rem; }
-    nav { background: #333; padding: 0.5rem; text-align: center; }
-    nav a { color: white; margin: 0 15px; text-decoration: none; font-weight: bold; }
-    nav a:hover { text-decoration: underline; }
-    section { padding: 2rem; max-width: 1000px; margin: auto; }
-    .hero { background: white; padding: 3rem; text-align: center; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    .hero h1 { margin-bottom: 1rem; color: #4a90e2; }
-    .products { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin-top: 2rem; }
-    .product { background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); text-align: center; }
-    .product h3 { color: #4a90e2; }
-    button { background: #4a90e2; color: white; border: none; padding: 0.7rem 1.2rem; border-radius: 5px; cursor: pointer; margin-top: 10px; }
-    button:hover { background: #357abd; }
-    #cart { background: white; padding: 1rem; border-radius: 8px; box-shadow: 0 2px 6px rgba(0,0,0,0.1); margin-top: 2rem; }
-    form.checkout, form.custom-agenda { display: flex; flex-direction: column; gap: 1rem; max-width: 600px; margin: auto; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    input, select, textarea { padding: 0.8rem; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; }
-    .preview { background: #f0f0f0; padding: 1rem; border-radius: 8px; margin-top: 1rem; text-align: center; }
-    .preview img { max-width: 200px; display: block; margin: 0 auto 10px; border-radius: 5px; }
-    .social-links { margin-top: 1rem; }
-    .social-links a { color: white; margin: 0 10px; text-decoration: none; font-weight: bold; }
-    footer { background: #333; color: white; text-align: center; padding: 1rem; margin-top: 2rem; }
+    :root{
+      --bg: #f5f0e1;
+      --text: #2c3e50;
+      --muted: #8e8d8a;
+      --card: #ffffff;
+      --brand: #2c3e50;
+      --brand-2: #1a252f;
+      --shadow-1: 0 4px 12px rgba(0,0,0,.08);
+      --shadow-2: 0 4px 8px rgba(0,0,0,.05);
+      --radius-lg: 16px;
+      --radius-md: 12px;
+      --radius-sm: 8px;
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+    h1,h2,h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 600;
+      color: var(--text);
+      margin: 0 0 .5rem 0;
+    }
+
+    /* Header */
+    header {
+      background: var(--brand);
+      color: var(--bg);
+      padding: 1.5rem 1rem;
+      text-align: center;
+    }
+    header img { max-width: 150px; margin-bottom: .5rem; }
+    .social-links { margin-top: .75rem; }
+    .social-links a {
+      color: var(--bg);
+      margin: 0 12px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color .3s ease;
+    }
+    .social-links a:hover { color: #e0d8c4; }
+
+    /* NAV + Hamburguesa */
+    nav {
+      background: var(--bg);
+      border-bottom: 2px solid var(--brand);
+    }
+    .nav-container{
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: .6rem 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+    }
+    .links a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all .3s ease;
+    }
+    .links a:hover { color: var(--muted); text-decoration: underline; }
+
+    .menu-toggle{
+      display: none;
+      position: absolute;
+      right: 12px;
+      top: 8px;
+      font-size: 26px;
+      line-height: 1;
+      padding: .3rem .6rem;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      cursor: pointer;
+    }
+
+    /* Layout secciones */
+    section { padding: 2rem 1rem; max-width: 1100px; margin: 0 auto; }
+    .hero{
+      background: #fff;
+      padding: 3rem 1.5rem;
+      text-align: center;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-1);
+    }
+    .hero h1{ font-size: 3rem; margin-bottom: .75rem; }
+
+    .products{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .product{
+      background: var(--card);
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-2);
+      text-align: center;
+      transition: transform .3s ease;
+    }
+    .product:hover{ transform: translateY(-6px); }
+    .product h3{ margin:.25rem 0 .5rem; }
+
+    button{
+      background: var(--brand);
+      color: var(--bg);
+      border: none;
+      padding: .7rem 1.4rem;
+      border-radius: 6px;
+      font-weight: 500;
+      font-family: 'Poppins', sans-serif;
+      cursor: pointer;
+      transition: background .3s ease;
+    }
+    button:hover{ background: var(--brand-2); }
+
+    #cart{
+      background: #fff;
+      padding: 1.5rem;
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-2);
+      margin-top: 2rem;
+    }
+    #cart-items{ padding-left: 1rem; }
+    #cart-items li{ margin: .3rem 0; }
+
+    form.checkout, form.custom-agenda{
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 700px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: var(--radius-lg);
+      box-shadow: var(--shadow-1);
+    }
+    label { font-size: .95rem; }
+    input,select,textarea{
+      padding: .9rem;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      font-family: 'Poppins', sans-serif;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .preview{
+      background: #f1efe8;
+      padding: 1rem;
+      border-radius: var(--radius-md);
+      margin-top: .5rem;
+      text-align: center;
+    }
+    .preview img{
+      max-width: 200px;
+      display: block;
+      margin: 0 auto 10px;
+      border-radius: var(--radius-sm);
+    }
+
+    footer{
+      background: var(--brand);
+      color: var(--bg);
+      text-align: center;
+      padding: 1rem;
+      margin-top: 2rem;
+    }
+
+    /* Responsive */
+    @media (max-width: 900px){
+      .hero h1{ font-size: 2.4rem; }
+    }
+    @media (max-width: 768px){
+      .menu-toggle{ display: block; }
+      .links{
+        display: none;
+        position: absolute;
+        left: 0; right: 0; top: 100%;
+        background: var(--bg);
+        border-bottom: 2px solid var(--brand);
+        flex-direction: column;
+        gap: 12px;
+        padding: 1rem 0 1.2rem;
+        z-index: 10;
+      }
+      .links.active{ display: flex; }
+      nav .nav-container{ justify-content: center; }
+      section{ padding: 1.5rem 1rem; }
+      .hero{ padding: 2rem 1.2rem; }
+    }
+    @media (max-width: 480px){
+      header img{ max-width: 110px; }
+      .hero h1{ font-size: 1.9rem; }
+      button{ padding: .6rem 1rem; font-size: .95rem; }
+      input,select,textarea{ padding: .75rem; font-size: .95rem; }
+    }
   </style>
 </head>
 <body>
 
+  <!-- HEADER -->
   <header>
-    <img src="https://via.placeholder.com/150x50?text=LOGO" alt="Mi Logo">
+    <img src="https://via.placeholder.com/150x50?text=LOGO" alt="Logo Flashback Memories">
     <h1>Flashback Memories</h1>
     <p>Plantilla con carrito, checkout y agenda personalizable</p>
     <div class="social-links">
-      <a href="https://wa.me/542494515397" target="_blank">WhatsApp</a> |
-      <a href="https://www.instagram.com/flashbackk_memories?igsh=YjZ6dGRqNmJuYTZp" target="_blank">Instagram</a>
+      <a href="https://wa.me/542494515397" target="_blank" rel="noopener">WhatsApp</a> |
+      <a href="https://www.instagram.com/flashbackk_memories?igsh=YjZ6dGRqNmJuYTZp" target="_blank" rel="noopener">Instagram</a>
     </div>
   </header>
 
+  <!-- NAV -->
   <nav>
-    <a href="#inicio">Inicio</a>
-    <a href="#tienda">Tienda</a>
-    <a href="#agenda">Crea tu propia agenda</a>
-    <a href="#contacto">Contacto</a>
+    <div class="nav-container">
+      <div class="links" id="nav-links">
+        <a href="#inicio">Inicio</a>
+        <a href="#tienda">Tienda</a>
+        <a href="#agenda">Crea tu propia agenda</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <button class="menu-toggle" aria-label="Abrir menú" onclick="toggleMenu()">☰</button>
+    </div>
   </nav>
 
+  <!-- HERO -->
   <section id="inicio" class="hero">
     <h1>Bienvenido</h1>
     <p>Ejemplo de tienda online con carrito y opciones de pago (transferencia, efectivo, PayPal).</p>
   </section>
 
+  <!-- TIENDA -->
   <section id="tienda">
     <h2>Productos</h2>
     <div class="products">
@@ -64,7 +267,7 @@
       <div class="product">
         <h3>Photorroll</h3>
         <p>$1500</p>
-        <button onclick="addToCart('Producto 2', 1500)">Agregar al carrito</button>
+        <button onclick="addToCart('Photorroll', 1500)">Agregar al carrito</button>
       </div>
       <div class="product">
         <h3>Producto 3</h3>
@@ -81,6 +284,7 @@
     </div>
   </section>
 
+  <!-- AGENDA PERSONALIZABLE -->
   <section id="agenda">
     <h2>Crea tu propia agenda</h2>
     <form class="custom-agenda" onsubmit="createAgenda(event)">
@@ -90,35 +294,42 @@
           <option value="Doble alambre">Doble alambre</option>
         </select>
       </label>
+
       <label>Agenda:
         <select id="tipoAgenda" onchange="updatePreview()">
           <option value="Diaria">Diaria</option>
           <option value="Semanal">Semanal</option>
         </select>
       </label>
+
       <label>Horarios:
         <select id="horarios" onchange="updatePreview()">
           <option value="Con">Con</option>
           <option value="Sin">Sin</option>
         </select>
       </label>
+
       <label>Estilo:
         <select id="estilo" onchange="updatePreview()">
           <option value="Formal">Formal</option>
           <option value="Informal">Informal</option>
         </select>
       </label>
+
       <label>Color de hojas:
         <select id="colorHojas" onchange="updatePreview()">
           <option value="Blancas">Blancas</option>
           <option value="Bio">Bio</option>
         </select>
       </label>
+
       <label><input type="checkbox" id="esquineros" onchange="updatePreview()"> Agregar esquineros (+$200)</label>
       <label><input type="checkbox" id="hojasEstudiante" onchange="updatePreview()"> Agregar hojas estudiante (+$300)</label>
       <label><input type="checkbox" id="hojasDocente" onchange="updatePreview()"> Agregar hojas docente (+$300)</label>
       <label><input type="checkbox" id="trackMenstrual" onchange="updatePreview()"> Track período menstrual (+$250)</label>
+
       <button type="submit">Agregar agenda personalizada al carrito</button>
+
       <div class="preview" id="agenda-preview">
         <img id="agenda-img" src="https://via.placeholder.com/200x250/cccccc/000000?text=Agenda" alt="Vista previa de la agenda">
         <div id="agenda-desc">Precio base: $2500</div>
@@ -126,6 +337,7 @@
     </form>
   </section>
 
+  <!-- CONTACTO / CHECKOUT -->
   <section id="contacto">
     <h2>Finalizar pedido</h2>
     <form class="checkout" onsubmit="sendOrder(event)">
@@ -137,10 +349,22 @@
   </section>
 
   <footer>
-    <p>&copy; 2025 Mi Tienda Online - Todos los derechos reservados</p>
+    <p>&copy; 2025 Flashback Memories - Todos los derechos reservados</p>
   </footer>
 
   <script>
+    // --- Menú hamburguesa ---
+    function toggleMenu(){
+      document.getElementById('nav-links').classList.toggle('active');
+    }
+
+    // Cierra el menú móvil al hacer clic en un link
+    document.addEventListener('click', (e)=>{
+      const links = document.getElementById('nav-links');
+      if(e.target.closest('#nav-links a')) links.classList.remove('active');
+    });
+
+    // --- Carrito ---
     let cart = [];
 
     function addToCart(product, price) {
@@ -158,23 +382,66 @@
       const cartTotal = document.getElementById('cart-total');
       cartItems.innerHTML = '';
       let total = 0;
+
       cart.forEach((item, index) => {
-        let li = document.createElement('li');
+        const li = document.createElement('li');
         li.textContent = `${item.product} - $${item.price} `;
-        let removeBtn = document.createElement('button');
+
+        const removeBtn = document.createElement('button');
         removeBtn.textContent = 'Eliminar';
         removeBtn.style.marginLeft = '10px';
         removeBtn.onclick = () => removeFromCart(index);
+
         li.appendChild(removeBtn);
         cartItems.appendChild(li);
         total += item.price;
       });
+
       cartTotal.textContent = total;
     }
 
     function checkout() {
       if (cart.length === 0) { alert('El carrito está vacío.'); return; }
-      let total = cart.reduce((sum, item) => sum + item.price, 0);
-      let paymentMethod = prompt(⁠ Total: $${total}\nElegí método de pago:\n1. Transferencia bancaria\n2. Efectivo\n3. PayPal ⁠);
-      if (paymentMethod === '1') { alert('Seleccionaste Transferencia Bancaria. Te enviaremos los datos de la cuenta.'); }
-      else if (paymentMethod === '2') { alert
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      const paymentMethod = prompt(
+        `Total: $${total}\nElegí método de pago:\n1. Transferencia bancaria\n2. Efectivo\n3. PayPal`
+      );
+      if (paymentMethod === '1') {
+        alert('Seleccionaste Transferencia Bancaria. Te enviaremos los datos de la cuenta.');
+      } else if (paymentMethod === '2') {
+        alert('Seleccionaste Efectivo. Coordinaremos la entrega.');
+      } else if (paymentMethod === '3') {
+        alert('Seleccionaste PayPal. Te enviaremos el link de pago.');
+      } else {
+        alert('Método inválido.');
+      }
+    }
+
+    // --- Agenda Personalizada ---
+    function createAgenda(event) {
+      event.preventDefault();
+      let price = 2500;
+      if (document.getElementById('esquineros').checked)       price += 200;
+      if (document.getElementById('hojasEstudiante').checked)  price += 300;
+      if (document.getElementById('hojasDocente').checked)     price += 300;
+      if (document.getElementById('trackMenstrual').checked)   price += 250;
+
+      addToCart("Agenda Personalizada", price);
+      alert(`Agenda personalizada agregada al carrito por $${price}`);
+    }
+
+    function updatePreview() {
+      let price = 2500;
+      if (document.getElementById('esquineros').checked)       price += 200;
+      if (document.getElementById('hojasEstudiante').checked)  price += 300;
+      if (document.getElementById('hojasDocente').checked)     price += 300;
+      if (document.getElementById('trackMenstrual').checked)   price += 250;
+
+      document.getElementById('agenda-desc').textContent = `Precio actualizado: $${price}`;
+    }
+
+    // (Opcional) actualiza preview al cargar
+    window.addEventListener('DOMContentLoaded', updatePreview);
+  </script>
+</body>
+</html>
