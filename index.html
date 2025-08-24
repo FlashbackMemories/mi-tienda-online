@@ -463,14 +463,14 @@
 
     const nombre = document.getElementById('nombre').value;
     const correo = document.getElementById('correo').value;
-    const direccion = document.getElementById('direccion').value;
+
 
     let detalle = cart.map(item => `- ${item.product}: $${item.price}`).join('%0A');
     let total = cart.reduce((sum, item) => sum + item.price, 0);
 
     const tuNumeroWhatsApp = "5492494515397";
 
-    const mensaje = `Hola!%0AQuiero confirmar mi pedido:%0A%0A${detalle}%0A%0ATotal: $${total}%0A%0ADatos del cliente:%0A- Nombre: ${nombre}%0A- Correo: ${correo}%0A- Dirección: ${direccion}`;
+    const mensaje = `Hola!%0AQuiero confirmar mi pedido:%0A%0A${detalle}%0A%0ATotal: $${total}%0A%0ADatos del cliente:%0A- Nombre: ${nombre}%0A- Correo: ${correo}`;
 
     window.open(`https://wa.me/${tuNumeroWhatsApp}?text=${mensaje}`, '_blank');
 
