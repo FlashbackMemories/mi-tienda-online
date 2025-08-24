@@ -417,21 +417,19 @@
     }
 
     function checkout() {
-      if (cart.length === 0) { alert('El carrito está vacío.'); return; }
-      const total = cart.reduce((sum, item) => sum + item.price, 0);
-      const paymentMethod = prompt(
-        `Total: $${total}\nElegí método de pago:\n1. Transferencia bancaria\n2. Efectivo\n3. PayPal`
-      );
-      if (paymentMethod === '1') {
-        alert('Seleccionaste Transferencia Bancaria. Te enviaremos los datos de la cuenta.');
-      } else if (paymentMethod === '2') {
-        alert('Seleccionaste Efectivo. Coordinaremos la entrega.');
-      } else if (paymentMethod === '3') {
-        alert('Seleccionaste PayPal. Te enviaremos el link de pago.');
-      } else {
-        alert('Método inválido.');
-      }
-    }
+  if (cart.length === 0) { 
+    alert('El carrito está vacío.'); 
+    return; 
+  }
+
+  // Calcular total y mostrar mensaje informativo
+  const total = cart.reduce((sum, item) => sum + item.price, 0);
+  alert(`Total de tu compra: $${total}. Ahora completa tus datos para finalizar el pedido.`);
+
+  // Llevar al usuario a la sección de contacto/finalizar pedido
+  document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+}
+
 
     // --- Agenda Personalizada ---
     function createAgenda(event) {
