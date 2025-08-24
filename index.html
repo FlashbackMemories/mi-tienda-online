@@ -368,93 +368,91 @@
     <p>&copy; 2025 Flashback Memories - Todos los derechos reservados</p>
   </footer>
 
-  <script>
-    // --- Menú hamburguesa ---
-    function toggleMenu(){
-      document.getElementById('nav-links').classList.toggle('active');
-    }
-
-    // Cierra el menú móvil al hacer clic en un link
-    document.addEventListener('click', (e)=>{
-      const links = document.getElementById('nav-links');
-      if(e.target.closest('#nav-links a')) links.classList.remove('active');
-    });
-
-    // --- Carrito ---
-    let cart = [];
-
-    function addToCart(product, price) {
-      cart.push({ product, price });
-      renderCart();
-    }
-
-    function removeFromCart(index) {
-      cart.splice(index, 1);
-      renderCart();
-    }
-
-    function renderCart() {
-      const cartItems = document.getElementById('cart-items');
-      const cartTotal = document.getElementById('cart-total');
-      cartItems.innerHTML = '';
-      let total = 0;
-
-      cart.forEach((item, index) => {
-        const li = document.createElement('li');
-        li.textContent = `${item.product} - $${item.price} `;
-
-        const removeBtn = document.createElement('button');
-        removeBtn.textContent = 'Eliminar';
-        removeBtn.style.marginLeft = '10px';
-        removeBtn.onclick = () => removeFromCart(index);
-
-        li.appendChild(removeBtn);
-        cartItems.appendChild(li);
-        total += item.price;
-      });
-
-      cartTotal.textContent = total;
-    }
-
-    function checkout() {
-  if (cart.length === 0) { 
-    alert('El carrito está vacío.'); 
-    return; 
+ <script>
+  // --- Menú hamburguesa ---
+  function toggleMenu() {
+    document.getElementById('nav-links').classList.toggle('active');
   }
 
-  // Calcular total y mostrar mensaje informativo
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
-  alert(`Total de tu compra: $${total}. Ahora completa tus datos para finalizar el pedido.`);
+  document.addEventListener('click', (e) => {
+    const links = document.getElementById('nav-links');
+    if (e.target.closest('#nav-links a')) links.classList.remove('active');
+  });
 
-  // Llevar al usuario a la sección de contacto/finalizar pedido
-  document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
-}
+  // --- Carrito ---
+  let cart = [];
 
+  function addToCart(product, price) {
+    cart.push({ product, price });
+    renderCart();
+  }
 
-    // --- Agenda Personalizada ---
-    function createAgenda(event) {
-      event.preventDefault();
-      let price = 20.000;
-      if (document.getElementById('esquineros').checked)       price += 1000;
-      if (document.getElementById('hojasEstudiante').checked)  price += 700;
-      if (document.getElementById('hojasDocente').checked)     price += 700;
-      if (document.getElementById('trackMenstrual').checked)   price += 300;
+  function removeFromCart(index) {
+    cart.splice(index, 1);
+    renderCart();
+  }
 
-      addToCart("Agenda Personalizada", price);
-      alert(`Agenda personalizada agregada al carrito por $${price}`);
+  function renderCart() {
+    const cartItems = document.getElementById('cart-items');
+    const cartTotal = document.getElementById('cart-total');
+    cartItems.innerHTML = '';
+    let total = 0;
+
+    cart.forEach((item, index) => {
+      const li = document.createElement('li');
+      li.textContent = `${item.product} - $${item.price} `;
+
+      const removeBtn = document.createElement('button');
+      removeBtn.textContent = 'Eliminar';
+      removeBtn.style.marginLeft = '10px';
+      removeBtn.onclick = () => removeFromCart(index);
+
+      li.appendChild(removeBtn);
+      cartItems.appendChild(li);
+      total += item.price;
+    });
+
+    cartTotal.textContent = total;
+  }
+
+  // --- Finalizar compra: muestra total y lleva al formulario ---
+  function checkout() {
+    if (cart.length === 0) { 
+      alert('El carrito está vacío.'); 
+      return; 
     }
 
-    function updatePreview() {
-      let price = 2500;
-      if (document.getElementById('esquineros').checked)       price += 200;
-      if (document.getElementById('hojasEstudiante').checked)  price += 300;
-      if (document.getElementById('hojasDocente').checked)     price += 300;
-      if (document.getElementById('trackMenstrual').checked)   price += 250;
+    const total = cart.reduce((sum, item) => sum + item.price, 0);
+    alert(`Total de tu compra: $${total}. Ahora completa tus datos para finalizar el pedido.`);
 
-      document.getElementById('agenda-desc').textContent = `Precio actualizado: $${price}`;
-    }
+    // Scroll suave a la sección de contacto/finalizar pedido
+    document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
+  }
 
-    // --- Enviar pedido por WhatsApp ---
+  // --- Agenda Personalizada ---
+  function createAgenda(event) {
+    event.preventDefault();
+    let price = 20000;
+    if (document.getElementById('esquineros').checked)       price += 1000;
+    if (document.getElementById('hojasEstudiante').checked)  price += 700;
+    if (document.getElementById('hojasDocente').checked)     price += 700;
+    if (document.getElementById('trackMenstrual').checked)   price += 300;
+
+    addToCart("Agenda Personalizada", price);
+    alert(`Agenda personalizada agregada al carrito por $${price}`);
+  }
+
+  function updatePreview() {
+    let price = 2500;
+    if (document.getElementById('esquineros').checked)       price += 200;
+    if (document.getElementById('hojasEstudiante').checked)  price += 300;
+    if (document.getElementById('hojasDocente').checked)     price += 300;
+    if (document.getElementById('trackMenstrual').checked)   price += 250;
+
+    document.getElementById('agenda-desc').textContent = `Precio actualizado: $${price}`;
+  }
+
+  // --- Enviar pedido por WhatsApp ---
   function sendOrder(event) {
     event.preventDefault();
 
@@ -465,28 +463,24 @@
 
     const nombre = document.getElementById('nombre').value;
     const correo = document.getElementById('correo').value;
-    
+    const direccion = document.getElementById('direccion').value;
 
-    // Resumen del carrito
     let detalle = cart.map(item => `- ${item.product}: $${item.price}`).join('%0A');
     let total = cart.reduce((sum, item) => sum + item.price, 0);
 
-    // Tu número de WhatsApp en formato internacional
     const tuNumeroWhatsApp = "5492494515397";
 
-    // Mensaje codificado para WhatsApp
-    const mensaje = `Hola!%0AQuiero confirmar mi pedido:%0A%0A${detalle}%0A%0ATotal: $${total}%0A%0ADatos del cliente:%0A- Nombre: ${nombre}%0A- Correo: ${correo}%0A`;
+    const mensaje = `Hola!%0AQuiero confirmar mi pedido:%0A%0A${detalle}%0A%0ATotal: $${total}%0A%0ADatos del cliente:%0A- Nombre: ${nombre}%0A- Correo: ${correo}%0A- Dirección: ${direccion}`;
 
-    // Abrir WhatsApp con el mensaje listo
     window.open(`https://wa.me/${tuNumeroWhatsApp}?text=${mensaje}`, '_blank');
 
-    // Vaciar carrito después del envío (opcional)
     cart = [];
     renderCart();
   }
 
-    // (Opcional) actualiza preview al cargar
-    window.addEventListener('DOMContentLoaded', updatePreview);
-  </script>
+  // Actualiza preview al cargar
+  window.addEventListener('DOMContentLoaded', updatePreview);
+</script>
+
 </body>
 </html>
