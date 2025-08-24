@@ -454,29 +454,44 @@
 
   // --- Enviar pedido por WhatsApp ---
   function sendOrder(event) {
-    event.preventDefault();
+  event.preventDefault();
 
-    if (cart.length === 0) {
-      alert('El carrito está vacío.');
-      return;
-    }
-
-    const nombre = document.getElementById('nombre').value;
-    const correo = document.getElementById('correo').value;
-
-
-    let detalle = cart.map(item => `- ${item.product}: $${item.price}`).join('%0A');
-    let total = cart.reduce((sum, item) => sum + item.price, 0);
-
-    const tuNumeroWhatsApp = "5492494515397";
-
-    const mensaje = `Hola!%0AQuiero confirmar mi pedido:%0A%0A${detalle}%0A%0ATotal: $${total}%0A%0ADatos del cliente:%0A- Nombre: ${nombre}%0A- Correo: ${correo}`;
-
-    window.open(`https://wa.me/${tuNumeroWhatsApp}?text=${mensaje}`, '_blank');
-
-    cart = [];
-    renderCart();
+  if (cart.length === 0) {
+    alert('El carrito está vacío.');
+    return;
   }
+
+  const nombre = document.getElementById('nombre').value.trim();
+  const correo = document.getElementById('correo').value.trim();
+
+  if (!nombre || !correo) {
+    alert('Por favor, completá tu nombre y correo.');
+    return;
+  }
+
+  let detalle = cart.map(item => `- ${item.product}: $${item.price}`).join('\n');
+  let total = cart.reduce((sum, item) => sum + item.price, 0);
+
+  const mensaje = `Hola!
+Quiero confirmar mi pedido:
+
+${detalle}
+
+Total: $${total}
+
+Datos del cliente:
+- Nombre: ${nombre}
+- Correo: ${correo}`;
+
+  const whatsappNumber = "5492494515397"; // Asegurate de que esté registrado en WhatsApp
+  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
+
+  window.open(url, '_blank');
+
+  // Vaciar carrito después de enviar
+  cart = [];
+  renderCart();
+}
 
   // Actualiza preview al cargar
   window.addEventListener('DOMContentLoaded', updatePreview);
