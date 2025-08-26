@@ -236,7 +236,7 @@
   <header>
     <img src="imagen1.jpg" alt="Logo Flashback Memories">
     <h1>Flashback Memories</h1>
-    <p>Plantilla con carrito, checkout y agenda personalizable</p>
+    <p>En las fotos la historia sigue intacta</p>
     <div class="social-links">
       <a href="https://wa.me/542494515397" target="_blank" rel="noopener">WhatsApp</a> |
       <a href="https://www.instagram.com/flashbackk_memories?igsh=YjZ6dGRqNmJuYTZp" target="_blank" rel="noopener">Instagram</a>
@@ -258,8 +258,8 @@
 
   <!-- HERO -->
   <section id="inicio" class="hero">
-    <h2>Bienvenido</h2>
-    <p>Ejemplo de tienda online con carrito y opciones de pago (transferencia, efectivo, PayPal).</p>
+    <h2>Bienvenidos</h2>
+    <p>Este es un espacio creado para que puedan ver algunas cositas llenas de magia</p>
   </section>
 
   <!-- TIENDA -->
@@ -269,26 +269,26 @@
       <div class="product">
         <h3>Photorroll</h3>
         <p>$8.000</p>
-        <button onclick="addToCart('Producto 1', 8000)">Agregar al carrito</button>
+        <button onclick="addToCart('Photoroll', 8000)">Agregar al carrito</button>
       </div>
       <div class="product">
         <h3>Mini book</h3>
         <p>$8.000</p>
-        <button onclick="addToCart('Photorroll', 8000)">Agregar al carrito</button>
+        <button onclick="addToCart('Mini book', 8000)">Agregar al carrito</button>
       </div>
       <div class="product">
         <h3>Mini Polaroids x 10 unidades</h3>
-        <p>$4.500</p>
-        <button onclick="addToCart('Producto 3', 4500)">Agregar al carrito</button>
+        <p>$4.800</p>
+        <button onclick="addToCart('Mini Polaroids x 10 unidades', 4800)">Agregar al carrito</button>
       </div>
     </div class="product">
     <h3>Polaroids x 10 unidades</h3>
-    <p>$5.000</p>
-    <button onclick="addToCart('Producto 4', 5000)">Agregar al carrito</button>
+    <p>$5.200</p>
+    <button onclick="addToCart('Polaroids x 10 unidades', 5200)">Agregar al carrito</button>
     </div class="product">
     <h3>LLavero de acrilico</h3>
-    <p>$3.000</p>
-    <button onclick="addToCart('Producto 5', 3000)">Agregar al carrito</button>
+    <p>$3.500</p>
+    <button onclick="addToCart('Llavero acrilico', 3500)">Agregar al carrito</button>
     </div>
     
 
@@ -339,16 +339,16 @@
         </select>
       </label>
 
-      <label><input type="checkbox" id="esquineros" onchange="updatePreview()"> Agregar esquineros (+$200)</label>
-      <label><input type="checkbox" id="hojasEstudiante" onchange="updatePreview()"> Agregar hojas estudiante (+$300)</label>
-      <label><input type="checkbox" id="hojasDocente" onchange="updatePreview()"> Agregar hojas docente (+$300)</label>
-      <label><input type="checkbox" id="trackMenstrual" onchange="updatePreview()"> Track período menstrual (+$250)</label>
+      <label><input type="checkbox" id="esquineros" onchange="updatePreview()"> Agregar esquineros (+$1000)</label>
+      <label><input type="checkbox" id="hojasEstudiante" onchange="updatePreview()"> Agregar hojas estudiante (+$2000)</label>
+      <label><input type="checkbox" id="hojasDocente" onchange="updatePreview()"> Agregar hojas docente (+$2000)</label>
+      <label><input type="checkbox" id="trackMenstrual" onchange="updatePreview()"> Track período menstrual (+$500)</label>
 
       <button type="submit">Agregar agenda personalizada al carrito</button>
 
       <div class="preview" id="agenda-preview">
         <img id="agenda-img" src="https://via.placeholder.com/200x250/cccccc/000000?text=Agenda" alt="Vista previa de la agenda">
-        <div id="agenda-desc">Precio base: $2500</div>
+        <div id="agenda-desc">Precio base: $20000</div>
       </div>
     </form>
   </section>
@@ -440,15 +440,15 @@
       extras.push("Esquineros (+$1000)");
     }
     if (document.getElementById('hojasEstudiante').checked) {
-      price += 700;
+      price += 2000;
       extras.push("Hojas estudiante (+$700)");
     }
     if (document.getElementById('hojasDocente').checked) {
-      price += 700;
+      price += 2000;
       extras.push("Hojas docente (+$700)");
     }
     if (document.getElementById('trackMenstrual').checked) {
-      price += 300;
+      price += 500;
       extras.push("Track menstrual (+$300)");
     }
 
@@ -476,11 +476,11 @@ Extras: ${extras.length > 0 ? extras.join(", ") : "Ninguno"}
   }
 
   function updatePreview() {
-    let price = 2500;
-    if (document.getElementById('esquineros').checked)       price += 200;
-    if (document.getElementById('hojasEstudiante').checked)  price += 300;
-    if (document.getElementById('hojasDocente').checked)     price += 300;
-    if (document.getElementById('trackMenstrual').checked)   price += 250;
+    let price = 20000;
+    if (document.getElementById('esquineros').checked)       price += 1000;
+    if (document.getElementById('hojasEstudiante').checked)  price += 2000;
+    if (document.getElementById('hojasDocente').checked)     price += 2000;
+    if (document.getElementById('trackMenstrual').checked)   price += 500;
 
     document.getElementById('agenda-desc').textContent = `Precio actualizado: $${price}`;
   }
