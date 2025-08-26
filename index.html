@@ -368,7 +368,7 @@
     <p>&copy; 2025 Flashback Memories - Todos los derechos reservados</p>
   </footer>
 
- <script>
+<script>
   // --- Menú hamburguesa ---
   function toggleMenu() {
     document.getElementById('nav-links').classList.toggle('active');
@@ -433,12 +433,45 @@
   function createAgenda(event) {
     event.preventDefault();
     let price = 20000;
-    if (document.getElementById('esquineros').checked)       price += 1000;
-    if (document.getElementById('hojasEstudiante').checked)  price += 700;
-    if (document.getElementById('hojasDocente').checked)     price += 700;
-    if (document.getElementById('trackMenstrual').checked)   price += 300;
+    let extras = [];
 
-    addToCart("Agenda Personalizada", price);
+    if (document.getElementById('esquineros').checked) {
+      price += 1000;
+      extras.push("Esquineros (+$1000)");
+    }
+    if (document.getElementById('hojasEstudiante').checked) {
+      price += 700;
+      extras.push("Hojas estudiante (+$700)");
+    }
+    if (document.getElementById('hojasDocente').checked) {
+      price += 700;
+      extras.push("Hojas docente (+$700)");
+    }
+    if (document.getElementById('trackMenstrual').checked) {
+      price += 300;
+      extras.push("Track menstrual (+$300)");
+    }
+
+    // Obtener valores seleccionados
+    const sistema     = document.getElementById('sistema').value;
+    const tipoAgenda  = document.getElementById('tipoAgenda').value;
+    const horarios    = document.getElementById('horarios').value;
+    const estilo      = document.getElementById('estilo').value;
+    const colorHojas  = document.getElementById('colorHojas').value;
+
+    // Guardamos toda la info como "detalles"
+    const detalles = `
+Sistema: ${sistema}
+Agenda: ${tipoAgenda}
+Horarios: ${horarios}
+Estilo: ${estilo}
+Color de hojas: ${colorHojas}
+Extras: ${extras.length > 0 ? extras.join(", ") : "Ninguno"}
+`;
+
+    cart.push({ product: "Agenda Personalizada", price, detalles });
+
+    renderCart();
     alert(`Agenda personalizada agregada al carrito por $${price}`);
   }
 
@@ -454,25 +487,33 @@
 
   // --- Enviar pedido por WhatsApp ---
   function sendOrder(event) {
-  event.preventDefault();
+    event.preventDefault();
 
-  if (cart.length === 0) {
-    alert('El carrito está vacío.');
-    return;
-  }
+    if (cart.length === 0) {
+      alert('El carrito está vacío.');
+      return;
+    }
 
-  const nombre = document.getElementById('nombre').value.trim();
-  const correo = document.getElementById('correo').value.trim();
+    const nombre = document.getElementById('nombre').value.trim();
+    const correo = document.getElementById('correo').value.trim();
 
-  if (!nombre || !correo) {
-    alert('Por favor, completá tu nombre y correo.');
-    return;
-  }
+    if (!nombre || !correo) {
+      alert('Por favor, completá tu nombre y correo.');
+      return;
+    }
 
-  let detalle = cart.map(item => `- ${item.product}: $${item.price}`).join('\n');
-  let total = cart.reduce((sum, item) => sum + item.price, 0);
+    // Armamos mensaje con detalles
+    let detalle = cart.map(item => {
+      let base = `- ${item.product}: $${item.price}`;
+      if (item.detalles) {
+        base += `\n${item.detalles}`;
+      }
+      return base;
+    }).join('\n\n');
 
-  const mensaje = `Hola!
+    let total = cart.reduce((sum, item) => sum + item.price, 0);
+
+    const mensaje = `Hola!
 Quiero confirmar mi pedido:
 
 ${detalle}
@@ -483,19 +524,20 @@ Datos del cliente:
 - Nombre: ${nombre}
 - Correo: ${correo}`;
 
-  const whatsappNumber = "5492494515397"; // Asegurate de que esté registrado en WhatsApp
-  const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
+    const whatsappNumber = "5492494515397"; // 👈 poné tu número válido acá
+    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
 
-  window.open(url, '_blank');
+    window.open(url, '_blank');
 
-  // Vaciar carrito después de enviar
-  cart = [];
-  renderCart();
-}
+    // Vaciar carrito después de enviar
+    cart = [];
+    renderCart();
+  }
 
   // Actualiza preview al cargar
   window.addEventListener('DOMContentLoaded', updatePreview);
 </script>
+
 
 </body>
 </html>
