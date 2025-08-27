@@ -1,376 +1,240 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Flashback Memories</title>
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;600&family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tienda de Agendas</title>
   <style>
-    :root{
-      --bg: #f5f0e1;
-      --text: #2c3e50;
-      --muted: #8e8d8a;
-      --card: #ffffff;
-      --brand: #2c3e50;
-      --brand-2: #1a252f;
-      --shadow-1: 0 4px 12px rgba(0,0,0,.08);
-      --shadow-2: 0 4px 8px rgba(0,0,0,.05);
-      --radius-lg: 16px;
-      --radius-md: 12px;
-      --radius-sm: 8px;
-    }
-
-    html { scroll-behavior: smooth; }
     body {
+      font-family: Arial, sans-serif;
       margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background: var(--bg);
-      color: var(--text);
-    }
-    h1 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      color: var(--card);
-      margin: 0 0 .5rem 0;
+      padding: 0;
+      background-color: #f4f4f4;
     }
 
-    h2,h3 {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 600;
-      color: var(--text);
-      margin: 0 0 .5rem 0;
-    }
-
-    /* Header */
     header {
-      background: var(--brand);
-      color: var(--bg);
-      padding: 1.5rem 1rem;
-      text-align: center;
-    }
-    header img { max-width: 150px; margin-bottom: .5rem; }
-    .social-links { margin-top: .75rem; }
-    .social-links a {
-      color: var(--bg);
-      margin: 0 12px;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color .3s ease;
-    }
-    .social-links a:hover { color: #e0d8c4; }
-
-    /* NAV + Hamburguesa */
-    nav {
-      background: var(--bg);
-      border-bottom: 2px solid var(--brand);
-    }
-    .nav-container{
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: .6rem 1rem;
+      background-color: #333;
+      color: white;
+      padding: 10px;
       display: flex;
+      justify-content: space-between;
       align-items: center;
-      justify-content: center;
-      position: relative;
     }
-    .links {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-    }
-    .links a {
-      color: var(--text);
-      text-decoration: none;
-      font-weight: 500;
-      transition: all .3s ease;
-    }
-    .links a:hover { color: var(--muted); text-decoration: underline; }
 
-    .menu-toggle{
+    nav ul {
+      display: flex;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    nav ul li {
+      margin: 0 10px;
+    }
+
+    nav ul li a {
+      color: white;
+      text-decoration: none;
+    }
+
+    .hamburger {
       display: none;
-      position: absolute;
-      right: 12px;
-      top: 8px;
-      font-size: 26px;
-      line-height: 1;
-      padding: .3rem .6rem;
-      background: transparent;
-      border: none;
-      color: var(--text);
       cursor: pointer;
+      font-size: 24px;
     }
 
-    /* Layout secciones */
-    section { padding: 2rem 1rem; max-width: 1100px; margin: 0 auto; }
-    .hero{
-      background: #fff;
-      padding: 3rem 1.5rem;
-      text-align: center;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-1);
-    }
-    .hero h1{ font-size: 3rem; margin-bottom: .75rem; }
-
-    .products{
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px,1fr));
-      gap: 1.5rem;
-      margin-top: 1.5rem;
-    }
-    .product{
-      background: var(--card);
-      padding: 1.5rem;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-2);
-      text-align: center;
-      transition: transform .3s ease;
-    }
-    .product:hover{ transform: translateY(-6px); }
-    .product h3{ margin:.25rem 0 .5rem; }
-
-    button{
-      background: var(--brand);
-      color: var(--bg);
-      border: none;
-      padding: .7rem 1.4rem;
-      border-radius: 6px;
-      font-weight: 500;
-      font-family: 'Poppins', sans-serif;
-      cursor: pointer;
-      transition: background .3s ease;
-    }
-    button:hover{ background: var(--brand-2); }
-
-    #cart{
-      background: #fff;
-      padding: 1.5rem;
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-2);
-      margin-top: 2rem;
-    }
-    #cart-items{ padding-left: 1rem; }
-    #cart-items li{ margin: .3rem 0; }
-
-    form.checkout, form.custom-agenda{
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      max-width: 700px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 2rem;
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-1);
-    }
-    label { font-size: .95rem; }
-    input,select,textarea{
-      padding: .9rem;
-      border: 1px solid #ccc;
-      border-radius: 6px;
-      font-size: 1rem;
-      font-family: 'Poppins', sans-serif;
-      width: 100%;
-      box-sizing: border-box;
-    }
-
-    .preview{
-      background: #f1efe8;
-      padding: 1rem;
-      border-radius: var(--radius-md);
-      margin-top: .5rem;
-      text-align: center;
-    }
-    .preview img{
-      max-width: 200px;
-      display: block;
-      margin: 0 auto 10px;
-      border-radius: var(--radius-sm);
-    }
-
-    footer{
-      background: var(--brand);
-      color: var(--bg);
-      text-align: center;
-      padding: 1rem;
-      margin-top: 2rem;
-    }
-
-    /* Responsive */
-    @media (max-width: 900px){
-      .hero h1{ font-size: 2.4rem; }
-    }
-    @media (max-width: 768px){
-      .menu-toggle{ display: block; }
-      .links{
+    @media (max-width: 768px) {
+      nav ul {
         display: none;
-        position: absolute;
-        left: 0; right: 0; top: 100%;
-        background: var(--bg);
-        border-bottom: 2px solid var(--brand);
         flex-direction: column;
-        gap: 12px;
-        padding: 1rem 0 1.2rem;
-        z-index: 10;
+        background: #333;
+        position: absolute;
+        top: 50px;
+        right: 10px;
+        width: 200px;
       }
-      .links.active{ display: flex; }
-      nav .nav-container{ justify-content: center; }
-      section{ padding: 1.5rem 1rem; }
-      .hero{ padding: 2rem 1.2rem; }
+      nav ul.active {
+        display: flex;
+      }
+      .hamburger {
+        display: block;
+      }
     }
-    @media (max-width: 480px){
-      header img{ max-width: 110px; }
-      .hero h1{ font-size: 1.9rem; }
-      button{ padding: .6rem 1rem; font-size: .95rem; }
-      input,select,textarea{ padding: .75rem; font-size: .95rem; }
+
+    section {
+      padding: 20px;
+      max-width: 900px;
+      margin: auto;
+    }
+
+    .custom-agenda label {
+      display: block;
+      margin: 10px 0 5px;
+    }
+
+    .custom-agenda select, 
+    .custom-agenda input[type="checkbox"],
+    .custom-agenda button {
+      margin-bottom: 10px;
+    }
+
+    .preview {
+      margin-top: 15px;
+    }
+
+    .preview img {
+      width: 200px;
+      height: auto;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    #cart {
+      background: white;
+      padding: 15px;
+      margin-top: 20px;
+      border-radius: 5px;
+    }
+
+    #cart-items li {
+      margin-bottom: 10px;
+    }
+
+    button {
+      padding: 8px 12px;
+      background: #333;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    button:hover {
+      background: #555;
+    }
+
+    /* --- ALERTA ANIMADA --- */
+    #alerta-diaria {
+      opacity: 0;
+      transition: opacity 0.5s ease-in-out;
+      color: red;
+      font-weight: bold;
+      margin-bottom: 10px;
+      height: 0;
+      overflow: hidden;
+    }
+
+    #alerta-diaria.visible {
+      opacity: 1;
+      height: auto;
+    }
+
+    footer {
+      background: #333;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <img src="imagen1.jpg" alt="Logo Flashback Memories">
-    <h1>Flashback Memories</h1>
-    <p>En las fotos la historia sigue intacta</p>
-    <div class="social-links">
-      <a href="https://wa.me/542494515397" target="_blank" rel="noopener">WhatsApp</a> |
-      <a href="https://www.instagram.com/flashbackk_memories?igsh=YjZ6dGRqNmJuYTZp" target="_blank" rel="noopener">Instagram</a>
-    </div>
-  </header>
-
-  <!-- NAV -->
+<header>
+  <h1>Tienda de Agendas</h1>
+  <span class="hamburger" onclick="toggleMenu()">&#9776;</span>
   <nav>
-    <div class="nav-container">
-      <div class="links" id="nav-links">
-        <a href="#inicio">Inicio</a>
-        <a href="#tienda">Tienda</a>
-        <a href="#agenda">Crea tu propia agenda</a>
-        <a href="#contacto">Contacto</a>
-      </div>
-      <button class="menu-toggle" aria-label="Abrir menú" onclick="toggleMenu()">☰</button>
-    </div>
+    <ul id="nav-links">
+      <li><a href="#agenda">Personalizar Agenda</a></li>
+      <li><a href="#cart">Carrito</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
   </nav>
+</header>
 
-  <!-- HERO -->
-  <section id="inicio" class="hero">
-    <h2>Bienvenidos</h2>
-    <p>Este es un espacio creado para que puedan ver algunas cositas llenas de magia</p>
-  </section>
+<!-- AGENDA PERSONALIZABLE -->
+<section id="agenda">
+  <h2>Crea tu propia agenda</h2>
+  <form class="custom-agenda" onsubmit="createAgenda(event)">
+    <label>Sistema:
+      <select id="sistema" onchange="updatePreview()">
+        <option value="Discos">Discos</option>
+        <option value="Doble alambre">Doble alambre</option>
+      </select>
+    </label>
 
-  <!-- TIENDA -->
-  <section id="tienda">
-    <h2>Productos</h2>
-    <div class="products">
-      <div class="product">
-        <h3>Photorroll</h3>
-        <p>$8.000</p>
-        <button onclick="addToCart('Photoroll', 8000)">Agregar al carrito</button>
-      </div>
-      <div class="product">
-        <h3>Mini book</h3>
-        <p>$8.000</p>
-        <button onclick="addToCart('Mini book', 8000)">Agregar al carrito</button>
-      </div>
-      <div class="product">
-        <h3>Mini Polaroids x 10 unidades</h3>
-        <p>$4.800</p>
-        <button onclick="addToCart('Mini Polaroids x 10 unidades', 4800)">Agregar al carrito</button>
-      </div>
-    </div class="product">
-    <h3>Polaroids x 10 unidades</h3>
-    <p>$5.200</p>
-    <button onclick="addToCart('Polaroids x 10 unidades', 5200)">Agregar al carrito</button>
-    </div class="product">
-    <h3>LLavero de acrilico</h3>
-    <p>$3.500</p>
-    <button onclick="addToCart('Llavero acrilico', 3500)">Agregar al carrito</button>
+    <label>Agenda:
+      <select id="tipoAgenda" onchange="updatePreview()">
+        <option value="Diaria">Diaria</option>
+        <option value="Semanal">Semanal</option>
+      </select>
+    </label>
+
+    <!-- ALERTA EXTRA SI ES DIARIA -->
+    <div id="alerta-diaria">
+      ⚠️ ATENCIÓN: Las agendas diarias tienen un costo adicional de $3000.
     </div>
-    
 
-    <div id="cart">
-      <h2>Carrito</h2>
-      <ul id="cart-items"></ul>
-      <p><strong>Total: $<span id="cart-total">0</span></strong></p>
-      <button onclick="checkout()">Finalizar compra</button>
+    <label>Horarios:
+      <select id="horarios" onchange="updatePreview()">
+        <option value="Con">Con</option>
+        <option value="Sin">Sin</option>
+      </select>
+    </label>
+
+    <label>Estilo:
+      <select id="estilo" onchange="updatePreview()">
+        <option value="Formal">Formal</option>
+        <option value="Informal">Informal</option>
+      </select>
+    </label>
+
+    <label>Color de hojas:
+      <select id="colorHojas" onchange="updatePreview()">
+        <option value="Blancas">Blancas</option>
+        <option value="Bio">Bio</option>
+      </select>
+    </label>
+
+    <label><input type="checkbox" id="esquineros" onchange="updatePreview()"> Agregar esquineros (+$1000)</label>
+    <label><input type="checkbox" id="hojasEstudiante" onchange="updatePreview()"> Agregar hojas estudiante (+$2000)</label>
+    <label><input type="checkbox" id="hojasDocente" onchange="updatePreview()"> Agregar hojas docente (+$2000)</label>
+    <label><input type="checkbox" id="trackMenstrual" onchange="updatePreview()"> Track período menstrual (+$500)</label>
+
+    <button type="submit">Agregar agenda personalizada al carrito</button>
+
+    <div class="preview" id="agenda-preview">
+      <img id="agenda-img" src="https://via.placeholder.com/200x250/cccccc/000000?text=Agenda" alt="Vista previa de la agenda">
+      <div id="agenda-desc">Precio base: $20000</div>
     </div>
-  </section>
+  </form>
+</section>
 
-  <!-- AGENDA PERSONALIZABLE -->
-  <section id="agenda">
-    <div id="alerta-diaria" style="display:none; color:red; font-weight:bold; margin-top:5px;">
-⚠️ ATENCIÓN: Las agendas diarias tienen un costo adicional de $3000.
-</div>
+<!-- CARRITO -->
+<section id="cart">
+  <h2>Carrito</h2>
+  <ul id="cart-items"></ul>
+  <p>Total: $<span id="cart-total">0</span></p>
+  <button onclick="checkout()">Finalizar Pedido</button>
+</section>
 
-    <h2>Crea tu propia agenda</h2>
-    <form class="custom-agenda" onsubmit="createAgenda(event)">
-      <label>Sistema:
-        <select id="sistema" onchange="updatePreview()">
-          <option value="Discos">Discos</option>
-          <option value="Doble alambre">Doble alambre</option>
-        </select>
-      </label>
+<!-- CONTACTO -->
+<section id="contacto">
+  <h2>Contacto y Finalización de Pedido</h2>
+  <form onsubmit="sendOrder(event)">
+    <label>Nombre:
+      <input type="text" id="nombre" required>
+    </label>
+    <label>Correo:
+      <input type="email" id="correo" required>
+    </label>
+    <button type="submit">Enviar pedido por WhatsApp</button>
+  </form>
+</section>
 
-      <label>Agenda:
-        <select id="tipoAgenda" onchange="updatePreview()">
-          <option value="Diaria">Diaria</option>
-          <option value="Semanal">Semanal</option>
-        </select>
-      </label>
-
-      <label>Horarios:
-        <select id="horarios" onchange="updatePreview()">
-          <option value="Con">Con</option>
-          <option value="Sin">Sin</option>
-        </select>
-      </label>
-
-      <label>Estilo:
-        <select id="estilo" onchange="updatePreview()">
-          <option value="Formal">Formal</option>
-          <option value="Informal">Informal</option>
-        </select>
-      </label>
-
-      <label>Color de hojas:
-        <select id="colorHojas" onchange="updatePreview()">
-          <option value="Blancas">Blancas</option>
-          <option value="Bio">Bio</option>
-        </select>
-      </label>
-
-      <label><input type="checkbox" id="esquineros" onchange="updatePreview()"> Agregar esquineros (+$1000)</label>
-      <label><input type="checkbox" id="hojasEstudiante" onchange="updatePreview()"> Agregar hojas estudiante (+$2000)</label>
-      <label><input type="checkbox" id="hojasDocente" onchange="updatePreview()"> Agregar hojas docente (+$2000)</label>
-      <label><input type="checkbox" id="trackMenstrual" onchange="updatePreview()"> Track período menstrual (+$500)</label>
-
-      <button type="submit">Agregar agenda personalizada al carrito</button>
-
-      <div class="preview" id="agenda-preview">
-        <img id="agenda-img" src="https://via.placeholder.com/200x250/cccccc/000000?text=Agenda" alt="Vista previa de la agenda">
-        <div id="agenda-desc">Precio base: $20000</div>
-      </div>
-    </form>
-  </section>
-
-  <!-- CONTACTO / CHECKOUT -->
-  <section id="contacto">
-    <h2>Finalizar pedido</h2>
-    <form class="checkout" onsubmit="sendOrder(event)">
-       <input type="text" id="nombre" placeholder="Tu nombre" required>
-        <input type="email" id="correo" placeholder="Tu correo" required>
-        
-      <button type="submit">Enviar pedido</button>
-    </form>
-  </section>
-
-  <footer>
-    <p>&copy; 2025 Flashback Memories - Todos los derechos reservados</p>
-  </footer>
+<footer>
+  <p>&copy; 2025 Tienda de Agendas</p>
+</footer>
 
 <script>
   // --- Menú hamburguesa ---
@@ -491,12 +355,13 @@ Extras: ${extras.length > 0 ? extras.join(", ") : "Ninguno"}
   function updatePreview() {
     let price = 20000;
     const tipoAgenda = document.getElementById('tipoAgenda').value;
+    const alerta = document.getElementById('alerta-diaria');
 
     if (tipoAgenda === "Diaria") {
       price += 3000;
-      document.getElementById('alerta-diaria').style.display = 'block';
+      alerta.classList.add('visible');
     } else {
-      document.getElementById('alerta-diaria').style.display = 'none';
+      alerta.classList.remove('visible');
     }
 
     if (document.getElementById('esquineros').checked)       price += 1000;
@@ -545,7 +410,7 @@ Datos del cliente:
 - Nombre: ${nombre}
 - Correo: ${correo}`;
 
-    const whatsappNumber = "5492494515397"; // <-- tu número válido
+    const whatsappNumber = "5492494515397";
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
 
     window.open(url, '_blank');
@@ -556,7 +421,5 @@ Datos del cliente:
 
   window.addEventListener('DOMContentLoaded', updatePreview);
 </script>
-
-
 </body>
 </html>
