@@ -302,6 +302,10 @@
 
   <!-- AGENDA PERSONALIZABLE -->
   <section id="agenda">
+    <div id="alerta-diaria" style="display:none; color:red; font-weight:bold; margin-top:5px;">
+⚠️ ATENCIÓN: Las agendas diarias tienen un costo adicional de $3000.
+</div>
+
     <h2>Crea tu propia agenda</h2>
     <form class="custom-agenda" onsubmit="createAgenda(event)">
       <label>Sistema:
@@ -402,6 +406,14 @@
       const li = document.createElement('li');
       li.textContent = `${item.product} - $${item.price} `;
 
+      if (item.detalles) {
+        const detailsDiv = document.createElement('div');
+        detailsDiv.style.fontSize = '12px';
+        detailsDiv.style.marginTop = '5px';
+        detailsDiv.textContent = item.detalles.trim();
+        li.appendChild(detailsDiv);
+      }
+
       const removeBtn = document.createElement('button');
       removeBtn.textContent = 'Eliminar';
       removeBtn.style.marginLeft = '10px';
@@ -415,7 +427,7 @@
     cartTotal.textContent = total;
   }
 
-  // --- Finalizar compra: muestra total y lleva al formulario ---
+  // --- Finalizar compra ---
   function checkout() {
     if (cart.length === 0) { 
       alert('El carrito está vacío.'); 
@@ -425,7 +437,6 @@
     const total = cart.reduce((sum, item) => sum + item.price, 0);
     alert(`Total de tu compra: $${total}. Ahora completa tus datos para finalizar el pedido.`);
 
-    // Scroll suave a la sección de contacto/finalizar pedido
     document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
   }
 
@@ -435,31 +446,33 @@
     let price = 20000;
     let extras = [];
 
+    const tipoAgenda = document.getElementById('tipoAgenda').value;
+    if (tipoAgenda === "Diaria") {
+      price += 3000;
+    }
+
     if (document.getElementById('esquineros').checked) {
       price += 1000;
       extras.push("Esquineros (+$1000)");
     }
     if (document.getElementById('hojasEstudiante').checked) {
       price += 2000;
-      extras.push("Hojas estudiante (+$700)");
+      extras.push("Hojas estudiante (+$2000)");
     }
     if (document.getElementById('hojasDocente').checked) {
       price += 2000;
-      extras.push("Hojas docente (+$700)");
+      extras.push("Hojas docente (+$2000)");
     }
     if (document.getElementById('trackMenstrual').checked) {
       price += 500;
-      extras.push("Track menstrual (+$300)");
+      extras.push("Track menstrual (+$500)");
     }
 
-    // Obtener valores seleccionados
-    const sistema     = document.getElementById('sistema').value;
-    const tipoAgenda  = document.getElementById('tipoAgenda').value;
-    const horarios    = document.getElementById('horarios').value;
-    const estilo      = document.getElementById('estilo').value;
-    const colorHojas  = document.getElementById('colorHojas').value;
+    const sistema    = document.getElementById('sistema').value;
+    const horarios   = document.getElementById('horarios').value;
+    const estilo     = document.getElementById('estilo').value;
+    const colorHojas = document.getElementById('colorHojas').value;
 
-    // Guardamos toda la info como "detalles"
     const detalles = `
 Sistema: ${sistema}
 Agenda: ${tipoAgenda}
@@ -477,6 +490,15 @@ Extras: ${extras.length > 0 ? extras.join(", ") : "Ninguno"}
 
   function updatePreview() {
     let price = 20000;
+    const tipoAgenda = document.getElementById('tipoAgenda').value;
+
+    if (tipoAgenda === "Diaria") {
+      price += 3000;
+      document.getElementById('alerta-diaria').style.display = 'block';
+    } else {
+      document.getElementById('alerta-diaria').style.display = 'none';
+    }
+
     if (document.getElementById('esquineros').checked)       price += 1000;
     if (document.getElementById('hojasEstudiante').checked)  price += 2000;
     if (document.getElementById('hojasDocente').checked)     price += 2000;
@@ -502,7 +524,6 @@ Extras: ${extras.length > 0 ? extras.join(", ") : "Ninguno"}
       return;
     }
 
-    // Armamos mensaje con detalles
     let detalle = cart.map(item => {
       let base = `- ${item.product}: $${item.price}`;
       if (item.detalles) {
@@ -524,17 +545,15 @@ Datos del cliente:
 - Nombre: ${nombre}
 - Correo: ${correo}`;
 
-    const whatsappNumber = "5492494515397"; // 👈 poné tu número válido acá
+    const whatsappNumber = "5492494515397"; // <-- tu número válido
     const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)}`;
 
     window.open(url, '_blank');
 
-    // Vaciar carrito después de enviar
     cart = [];
     renderCart();
   }
 
-  // Actualiza preview al cargar
   window.addEventListener('DOMContentLoaded', updatePreview);
 </script>
 
