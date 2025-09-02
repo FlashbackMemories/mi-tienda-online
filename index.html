@@ -46,22 +46,39 @@
 
     /* Header */
     header {
-      background: var(--brand);
-      color: var(--bg);
-      padding: 1.5rem 1rem;
-      text-align: center;
+      position: relative;
+      width: 100%;
+      height: 60vh; /* altura de la portada, podés ajustar (60vh = 60% de la pantalla) */
+      overflow: hidden;
     }
-    header img { max-width: 150px; margin-bottom: .5rem; }
-    .social-links { margin-top: .75rem; }
+    
+    header .hero-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* hace que la imagen se ajuste sin deformarse */
+      display: block;
+    }
+    
+    .social-links {
+      position: absolute;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.5);
+      padding: 10px 15px;
+      border-radius: 8px;
+    }
+    
     .social-links a {
-      color: var(--bg);
+      color: #fff;
       margin: 0 12px;
       text-decoration: none;
       font-weight: 500;
       transition: color .3s ease;
     }
     .social-links a:hover { color: #e0d8c4; }
-
+    
+    
     /* NAV + Hamburguesa */
     nav {
       background: var(--bg);
@@ -234,14 +251,13 @@
 
   <!-- HEADER -->
   <header>
-    <img src="imagen1.jpg" alt="Logo Flashback Memories">
-    <h1>Flashback Memories</h1>
-    <p>Plantilla con carrito, checkout y agenda personalizable</p>
+    <img src="imagen1.jpg" alt="Logo Flashback Memories" class="hero-img">
     <div class="social-links">
       <a href="https://wa.me/542494515397" target="_blank" rel="noopener">WhatsApp</a> |
       <a href="https://www.instagram.com/flashbackk_memories?igsh=YjZ6dGRqNmJuYTZp" target="_blank" rel="noopener">Instagram</a>
     </div>
   </header>
+
 
   <!-- NAV -->
   <nav>
