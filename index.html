@@ -90,8 +90,41 @@
       box-shadow: var(--shadow-2);
       text-align: center;
       transition: transform .3s ease;
+      position: relative;
     }
     .product:hover{ transform: translateY(-6px); }
+
+    /* Carrusel */
+    .carousel {
+      position: relative;
+      width: 100%;
+      height: 200px;
+      margin-bottom: 10px;
+      overflow: hidden;
+      border-radius: var(--radius-sm);
+    }
+    .carousel img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: none;
+    }
+    .carousel img.active {
+      display: block;
+    }
+    .carousel button {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0,0,0,0.4);
+      color: #fff;
+      border: none;
+      padding: .5rem 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+    .carousel button.prev { left: 5px; }
+    .carousel button.next { right: 5px; }
 
     button{
       background: var(--brand);
@@ -182,31 +215,73 @@
   <section id="tienda">
     <h2>Productos</h2>
     <div class="products">
+
+      <!-- Producto Photorroll -->
       <div class="product">
+        <div class="carousel" data-index="0">
+          <img src="photorroll1.jpg" class="active">
+          <img src="photorroll2.jpg">
+          <img src="photorroll3.jpg">
+          <button class="prev">&lt;</button>
+          <button class="next">&gt;</button>
+        </div>
         <h3>Photorroll</h3>
         <p>$8.000</p>
         <button onclick="addToCart('Photorroll', 8000)">Agregar al carrito</button>
       </div>
+
+      <!-- Producto Mini book -->
       <div class="product">
+        <div class="carousel" data-index="0">
+          <img src="minibook1.jpg" class="active">
+          <img src="minibook2.jpg">
+          <button class="prev">&lt;</button>
+          <button class="next">&gt;</button>
+        </div>
         <h3>Mini book</h3>
         <p>$8.000</p>
         <button onclick="addToCart('Mini book', 8000)">Agregar al carrito</button>
       </div>
+
+      <!-- Producto Mini Polaroids -->
       <div class="product">
+        <div class="carousel" data-index="0">
+          <img src="minipolaroid1.jpg" class="active">
+          <img src="minipolaroid2.jpg">
+          <button class="prev">&lt;</button>
+          <button class="next">&gt;</button>
+        </div>
         <h3>Mini Polaroids x 10 unidades</h3>
         <p>$4.500</p>
         <button onclick="addToCart('Mini Polaroids x10', 4500)">Agregar al carrito</button>
       </div>
+
+      <!-- Producto Polaroids -->
       <div class="product">
+        <div class="carousel" data-index="0">
+          <img src="polaroid1.jpg" class="active">
+          <img src="polaroid2.jpg">
+          <button class="prev">&lt;</button>
+          <button class="next">&gt;</button>
+        </div>
         <h3>Polaroids x 10 unidades</h3>
         <p>$5.000</p>
         <button onclick="addToCart('Polaroids x10', 5000)">Agregar al carrito</button>
       </div>
+
+      <!-- Producto Llavero -->
       <div class="product">
+        <div class="carousel" data-index="0">
+          <img src="llavero1.jpg" class="active">
+          <img src="llavero2.jpg">
+          <button class="prev">&lt;</button>
+          <button class="next">&gt;</button>
+        </div>
         <h3>Llavero de acrílico</h3>
         <p>$3.000</p>
         <button onclick="addToCart('Llavero acrílico', 3000)">Agregar al carrito</button>
       </div>
+
     </div>
 
     <div id="cart">
@@ -323,80 +398,12 @@
     cartTotal.textContent = total;
   }
 
-  // --- Finalizar compra ---
-  function checkout() {
-    if (cart.length === 0) { 
-      alert('El carrito está vacío.'); 
-      return; 
-    }
-    const total = cart.reduce((sum, item) => sum + item.price, 0);
-    alert(⁠ Total de tu compra: $${total}. Ahora completa tus datos para finalizar el pedido. ⁠);
-    document.getElementById('contacto').scrollIntoView({ behavior: 'smooth' });
-  }
+  // --- Carruseles ---
+  document.querySelectorAll('.carousel').forEach(carousel => {
+    const imgs = carousel.querySelectorAll('img');
+    const prev = carousel.querySelector('.prev');
+    const next = carousel.querySelector('.next');
+    let index = 0;
 
-  // --- Agenda Personalizada ---
-  function createAgenda(event) {
-    event.preventDefault();
-    let price = document.getElementById('tipoAgenda').value === "Diaria" ? 3000 : 2500;
-    if (document.getElementById('esquineros').checked)       price += 200;
-    if (document.getElementById('hojasEstudiante').checked)  price += 300;
-    if (document.getElementById('hojasDocente').checked)     price += 300;
-    if (document.getElementById('trackMenstrual').checked)   price += 250;
-
-    addToCart("Agenda Personalizada", price);
-    alert(⁠ Agenda personalizada agregada al carrito por $${price} ⁠);
-  }
-
-  function updatePreview() {
-    let price = document.getElementById('tipoAgenda').value === "Diaria" ? 3000 : 2500;
-    if (document.getElementById('esquineros').checked)       price += 200;
-    if (document.getElementById('hojasEstudiante').checked)  price += 300;
-    if (document.getElementById('hojasDocente').checked)     price += 300;
-    if (document.getElementById('trackMenstrual').checked)   price += 250;
-
-    document.getElementById('agenda-desc').textContent = ⁠ Precio actualizado: $${price} ⁠;
-  }
-
-  // --- Enviar pedido ---
-  function sendOrder(event) {
-    event.preventDefault();
-    if (cart.length === 0) {
-      alert('El carrito está vacío.');
-      return;
-    }
-
-    const nombre = document.getElementById('nombre').value.trim();
-    const correo = document.getElementById('correo').value.trim();
-
-    if (!nombre || !correo) {
-      alert('Por favor, completá tu nombre y correo.');
-      return;
-    }
-
-    let detalle = cart.map(item => ⁠ - ${item.product}: $${item.price} ⁠).join('\n');
-    let total = cart.reduce((sum, item) => sum + item.price, 0);
-
-    const mensaje = `Hola!
-Quiero confirmar mi pedido:
-
-${detalle}
-
-Total: $${total}
-
-Datos del cliente:
-•⁠  ⁠Nombre: ${nombre}
-•⁠  ⁠Correo: ${correo}`;
-
-    const whatsappNumber = "5492494515397";
-    const url = ⁠ https://wa.me/${whatsappNumber}?text=${encodeURIComponent(mensaje)} ⁠;
-    window.open(url, '_blank');
-
-    cart = [];
-    renderCart();
-  }
-
-  window.addEventListener('DOMContentLoaded', updatePreview);
-</script>
-
-</body>
-</html>
+    function showImage(i) {
+      imgs.forEach(img
