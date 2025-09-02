@@ -383,7 +383,7 @@
 
     cart.forEach((item, index) => {
       const li = document.createElement('li');
-      li.textContent = `${item.product} - $${item.price} `;
+      li.textContent = `${item.product} - $${item.price}`;
 
       const removeBtn = document.createElement('button');
       removeBtn.textContent = 'Eliminar';
@@ -406,4 +406,89 @@
     let index = 0;
 
     function showImage(i) {
-      imgs.forEach(img
+      imgs.forEach((img, idx) => {
+        img.classList.toggle('active', idx === i);
+      });
+    }
+
+    prev.addEventListener('click', () => {
+      index = (index - 1 + imgs.length) % imgs.length;
+      showImage(index);
+    });
+
+    next.addEventListener('click', () => {
+      index = (index + 1) % imgs.length;
+      showImage(index);
+    });
+  });
+
+  // --- Agenda personalizada ---
+  function updatePreview() {
+    let desc = "Agenda personalizada: ";
+    let price = 2500;
+
+    const sistema = document.getElementById("sistema").value;
+    const tipoAgenda = document.getElementById("tipoAgenda").value;
+    const horarios = document.getElementById("horarios").value;
+    const estilo = document.getElementById("estilo").value;
+    const colorHojas = document.getElementById("colorHojas").value;
+
+    if (tipoAgenda === "Diaria") price += 1500; // extra si es diaria
+    if (document.getElementById("esquineros").checked) price += 200;
+    if (document.getElementById("hojasEstudiante").checked) price += 300;
+    if (document.getElementById("hojasDocente").checked) price += 300;
+    if (document.getElementById("trackMenstrual").checked) price += 250;
+
+    desc += `${tipoAgenda}, ${sistema}, ${horarios} horarios, estilo ${estilo}, hojas ${colorHojas}. Precio: $${price}`;
+
+    document.getElementById("agenda-desc").textContent = desc;
+  }
+
+  function createAgenda(event) {
+    event.preventDefault();
+    const desc = document.getElementById("agenda-desc").textContent;
+    const price = parseInt(desc.match(/\$([0-9]+)/)[1]);
+    addToCart(desc, price);
+    alert("Agenda personalizada agregada al carrito ✅");
+  }
+
+  // --- Checkout vía WhatsApp ---
+  function checkout() {
+    if (cart.length === 0) {
+      alert("El carrito está vacío");
+      return;
+    }
+    let msg = "Hola, quiero realizar el siguiente pedido:\n\n";
+    cart.forEach(item => {
+      msg += `- ${item.product}: $${item.price}\n`;
+    });
+    const total = document.getElementById('cart-total').textContent;
+    msg += `\nTotal: $${total}`;
+
+    const phone = "542494515397"; // tu número con código de país
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+  }
+
+  function sendOrder(event) {
+    event.preventDefault();
+    const nombre = document.getElementById("nombre").value;
+    const correo = document.getElementById("correo").value;
+
+    if (cart.length === 0) {
+      alert("Primero agrega productos al carrito");
+      return;
+    }
+
+    let msg = `Nuevo pedido de ${nombre} (${correo}):\n\n`;
+    cart.forEach(item => {
+      msg += `- ${item.product}: $${item.price}\n`;
+    });
+    const total = document.getElementById('cart-total').textContent;
+    msg += `\nTotal: $${total}`;
+
+    const phone = "542494515397";
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+  }
+</script>
