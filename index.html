@@ -308,13 +308,19 @@
     <p style="color:red; font-weight:bold;">⚠ ATENCIÓN: Si la agenda es <u>DIARIA</u>, el precio es mayor que la semanal.</p>
 
     <form class="custom-agenda" onsubmit="createAgenda(event)">
-      <label>Sistema:
-        <select id="sistema" onchange="updatePreview()">
-          <option value="Discos">Discos</option>
-          <option value="Doble alambre">Doble alambre</option>
-        </select>
-      </label>
-
+      <label for="sistema">Sistema:</label>
+<div class="option-group">
+  <label>
+    <input type="radio" name="sistema" value="Discos" checked>
+    <img src="sistema-discos.jpg" alt="Discos" class="option-img">
+    Discos
+  </label>
+  <label>
+    <input type="radio" name="sistema" value="Doble alambre">
+    <img src="sistema-doblealambre.jpg" alt="Doble alambre" class="option-img">
+    Doble alambre
+  </label>
+</div>
       <label>Agenda:
         <select id="tipoAgenda" onchange="updatePreview()">
           <option value="Diaria">Diaria</option>
