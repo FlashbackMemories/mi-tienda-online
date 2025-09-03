@@ -448,7 +448,8 @@
   function createAgenda(event) {
     event.preventDefault();
     const desc = document.getElementById("agenda-desc").textContent;
-    const price = parseInt(desc.match(/\$([0-9]+)/)[1]);
+   const match = desc.match(/\$([\d\.]+)/);
+    const price = match ? parseInt(match[1].replace(/\./g, ''), 10) : 0;
     addToCart(desc, price);
     alert("Agenda personalizada agregada al carrito ✅");
   }
