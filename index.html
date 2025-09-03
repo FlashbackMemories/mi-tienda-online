@@ -496,12 +496,14 @@ function updatePreview() {
     // Agregar al carrito
     addToCart(desc, price);
     alert("Agenda personalizada agregada al carrito ✅");
+  }
+  
   // --- Checkout vía WhatsApp ---
   function checkout() {
     if (cart.length === 0) {
       alert("El carrito está vacío");
       return;
-    }
+  }
     let msg = "Hola, quiero realizar el siguiente pedido:\n\n";
     cart.forEach(item => {
       msg += `- ${item.product}: $${item.price}\n`;
