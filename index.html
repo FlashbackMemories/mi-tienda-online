@@ -335,15 +335,15 @@ input[type="radio"]:checked + .option-img {
       <label for="sistema">Sistema:</label>
 <div class="option-group">
   <label>
-    <input type="radio" name="sistema" value="Discos" checked>
-    <img src="SISTEMA DISCOS.jpg" alt="Discos" class="option-img">
-    Discos
-  </label>
-  <label>
-    <input type="radio" name="sistema" value=" Doble alambre">
-    <img src="SISTEMA DOBLE ALAMBRE.png" alt="Doble alambre" class="option-img">
-    Doble alambre
-  </label>
+  <input type="radio" name="sistema" value="Discos" checked onchange="updatePreview()">
+  <img src="SISTEMA DISCOS.jpg" alt="Discos" class="option-img">
+  Discos
+</label>
+<label>
+  <input type="radio" name="sistema" value="Doble alambre" onchange="updatePreview()">
+  <img src="SISTEMA DOBLE ALAMBRE.png" alt="Doble alambre" class="option-img">
+  Doble alambre
+</label>
 </div>
       <label>Agenda:
         <select id="tipoAgenda" onchange="updatePreview()">
@@ -536,4 +536,8 @@ function updatePreview() {
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
     window.open(url, "_blank");
   }
+      // Inicializar el preview al cargar la página
+  window.addEventListener('DOMContentLoaded', () => {
+    updatePreview();
+  });
 </script>
