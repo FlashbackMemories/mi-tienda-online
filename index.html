@@ -453,36 +453,49 @@ input[type="radio"]:checked + .option-img {
   });
 
   // --- Agenda personalizada ---
-  function updatePreview() {
+function updatePreview() {
     let desc = "Agenda personalizada: ";
     let price = 2500;
 
-    const sistema = document.getElementById("sistema").value;
+    // Tomamos los valores correctos de los radios y selects
+    const sistema = document.querySelector('input[name="sistema"]:checked').value;
     const tipoAgenda = document.getElementById("tipoAgenda").value;
     const horarios = document.getElementById("horarios").value;
     const estilo = document.getElementById("estilo").value;
     const colorHojas = document.getElementById("colorHojas").value;
 
+    // Sumar precios extras
     if (tipoAgenda === "Diaria") price += 1500; // extra si es diaria
     if (document.getElementById("esquineros").checked) price += 200;
     if (document.getElementById("hojasEstudiante").checked) price += 300;
     if (document.getElementById("hojasDocente").checked) price += 300;
     if (document.getElementById("trackMenstrual").checked) price += 250;
 
-    desc += `${tipoAgenda}, ${sistema}, ${horarios} horarios, estilo ${estilo}, hojas ${colorHojas}. Precio: $${price}`;
+    // Construir descripción completa
+    desc += `${tipoAgenda}, sistema: ${sistema}, ${horarios} horarios, estilo ${estilo}, hojas ${colorHojas}`;
+    const extras = [];
+    if (document.getElementById("esquineros").checked) extras.push("esquineros");
+    if (document.getElementById("hojasEstudiante").checked) extras.push("hojas estudiante");
+    if (document.getElementById("hojasDocente").checked) extras.push("hojas docente");
+    if (document.getElementById("trackMenstrual").checked) extras.push("track período menstrual");
+    if (extras.length > 0) desc += `, extras: ${extras.join(', ')}`;
+
+    desc += `. Precio: $${price}`;
 
     document.getElementById("agenda-desc").textContent = desc;
-  }
+}
 
   function createAgenda(event) {
     event.preventDefault();
     const desc = document.getElementById("agenda-desc").textContent;
-   const match = desc.match(/\$([\d\.]+)/);
+
+    // Sacar precio del texto
+    const match = desc.match(/\$([\d\.]+)/);
     const price = match ? parseInt(match[1].replace(/\./g, ''), 10) : 0;
+
+    // Agregar al carrito
     addToCart(desc, price);
     alert("Agenda personalizada agregada al carrito ✅");
-  }
-
   // --- Checkout vía WhatsApp ---
   function checkout() {
     if (cart.length === 0) {
