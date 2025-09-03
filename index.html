@@ -516,7 +516,8 @@ input[type="radio"]:checked + .option-img {
       msg += `- ${item.product}: $${item.price}\n`;
     });
     const total = document.getElementById('cart-total').textContent;
-    msg += `\nTotal: $${total}`;
+    msg += `\n🛒 *Total:* $${total}\n\nGracias por tu compra 🙌✨`;
+
 
     const phone = "542494515397";
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(msg)}`;
